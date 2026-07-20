@@ -1,0 +1,1155 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD",
+      "label": "Grafana Cloud Prometheus",
+      "description": "Datasource OTLP/Prometheus de Grafana Cloud",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    { "type": "grafana",    "id": "grafana",    "name": "Grafana",     "version": "10.0.0" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus",  "version": "1.0.0" },
+    { "type": "panel",      "id": "stat",       "name": "Stat",        "version": "" },
+    { "type": "panel",      "id": "table",      "name": "Table",       "version": "" },
+    { "type": "panel",      "id": "timeseries", "name": "Time series", "version": "" },
+    { "type": "panel",      "id": "bargauge",   "name": "Bar gauge",   "version": "" }
+  ],
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": ["sqlmon"],
+      "targetBlank": false,
+      "title": "← Fleet Overview",
+      "type": "dashboards",
+      "url": "/d/sqlmon-fleet/sql-monitor-fleet-overview"
+    }
+  ],
+  "panels": [
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "KPIs — $server",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red",    "value": 85 }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "CPU — sql_cpu_percent",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_cpu_percent\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "CPU %",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 40 },
+              { "color": "red",    "value": 54 }
+            ]
+          },
+          "unit": "decgbytes",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Memoria — sql_committed_memory_gb",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_committed_memory_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Mem commit GB",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 200 },
+              { "color": "red",    "value": 400 }
+            ]
+          },
+          "unit": "short",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Conexiones — sql_user_connections",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_user_connections\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "User connections",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red",    "value": 5 }
+            ]
+          },
+          "unit": "short",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Queries Lentas Activas — sql_slow_query_elapsed_sec",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "count(sqlmon_all_metrics{metric_name=\"sql_slow_query_elapsed_sec\", server=~\"$server\", job=\"sqlmon-agent\"} > 10) or vector(0)",
+          "legendFormat": "Slow queries activas",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red",    "value": 3 }
+            ]
+          },
+          "unit": "short",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Bloqueos — sql_blocked_sessions",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_blocked_sessions\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Sesiones bloqueadas",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red",    "value": 5 }
+            ]
+          },
+          "unit": "short",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Deadlocks — sql_deadlocks_last_hour",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_deadlocks_last_hour\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Deadlocks última hora",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "id": 10,
+      "title": "Series de Tiempo — Recursos",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true,
+            "thresholdsStyle": { "mode": "line+area" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "transparent", "value": null },
+              { "color": "red",         "value": 85 }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "CPU %" },
+            "properties": [
+              { "id": "color", "value": { "fixedColor": "#f2495c", "mode": "fixed" } }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "id": 11,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max","mean"] },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "sql_cpu_percent — $server",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_cpu_percent\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "CPU %",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "decgbytes",
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Memoria commit GB" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#f2cc0c", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Buffer pool GB" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#5794f2", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "RAM física GB" },
+            "properties": [
+              { "id": "color", "value": { "fixedColor": "#73bf69", "mode": "fixed" } },
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [6, 4] } }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "id": 12,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "title": "Memoria — sql_committed_memory_gb · sql_buffer_pool_used_gb",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_committed_memory_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Memoria commit GB",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_buffer_pool_used_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Buffer pool GB",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_physical_memory_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "RAM física GB",
+          "refId": "C"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Conexiones usuario" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#5794f2", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Conexiones activas" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#73bf69", "mode": "fixed" } }]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "id": 13,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max","mean"] },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "title": "Conexiones — sql_user_connections · sql_active_connections",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_user_connections\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Conexiones usuario",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_active_connections\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Conexiones activas",
+          "refId": "B"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 0,
+            "fillOpacity": 80,
+            "drawStyle": "bars",
+            "barAlignment": 0,
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "id": 14,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["sum","max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Queries Lentas por Severidad — count(sql_slow_query_elapsed_sec)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "count(sqlmon_all_metrics{metric_name=\"sql_slow_query_elapsed_sec\", server=~\"$server\", severity=\"CRITICAL\", job=\"sqlmon-agent\"} > 0) or vector(0)",
+          "legendFormat": "CRITICAL (>300s)",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "count(sqlmon_all_metrics{metric_name=\"sql_slow_query_elapsed_sec\", server=~\"$server\", severity=\"WARNING\", job=\"sqlmon-agent\"} > 0) or vector(0)",
+          "legendFormat": "WARNING (>60s)",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "count(sqlmon_all_metrics{metric_name=\"sql_slow_query_elapsed_sec\", server=~\"$server\", severity=\"ELEVATED\", job=\"sqlmon-agent\"} > 0) or vector(0)",
+          "legendFormat": "ELEVATED (>10s)",
+          "refId": "C"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "id": 20,
+      "title": "Bloqueos · Deadlocks · Wait Stats",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Sesiones bloqueadas" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#f2cc0c", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Bloqueos críticos (>30s)" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "#f2495c", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Max espera (s)" },
+            "properties": [
+              { "id": "color", "value": { "fixedColor": "#ff9830", "mode": "fixed" } },
+              { "id": "unit",  "value": "s" }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 23 },
+      "id": 21,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Bloqueos — sql_blocked_sessions · sql_critical_blocks · sql_max_block_wait_sec",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_blocked_sessions\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Sesiones bloqueadas",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_critical_blocks\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Bloqueos críticos (>30s)",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_max_block_wait_sec\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Max espera (s)",
+          "refId": "C"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 23 },
+      "id": 22,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Deadlocks — sql_deadlocks_last_hour",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_deadlocks_last_hour\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Deadlocks última hora",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 1000 },
+              { "color": "red",    "value": 5000 }
+            ]
+          },
+          "unit": "s",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 30 },
+      "id": 23,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "title": "Top Wait Types — sql_wait_time_sec {wait_type}",
+      "type": "bargauge",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "topk(10, sqlmon_all_metrics{metric_name=\"sql_wait_time_sec\", server=~\"$server\", job=\"sqlmon-agent\"})",
+          "legendFormat": "{{wait_type}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 1000 },
+              { "color": "red",    "value": 5000 }
+            ]
+          },
+          "unit": "s",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 30 },
+      "id": 24,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "title": "Latch Contention — sql_latch_wait_sec {latch_class}",
+      "type": "bargauge",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "topk(8, sqlmon_all_metrics{metric_name=\"sql_latch_wait_sec\", server=~\"$server\", job=\"sqlmon-agent\"})",
+          "legendFormat": "{{latch_class}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 38 },
+      "id": 30,
+      "title": "Disco · TempDB",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red",    "value": 90 }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 39 },
+      "id": 31,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "title": "sql_disk_used_percent — por archivo {database}/{file}",
+      "type": "bargauge",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_disk_used_percent\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "{{database}} / {{file}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "decgbytes",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 39 },
+      "id": 32,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "title": "TempDB — sql_tempdb_user_gb · sql_tempdb_internal_gb · sql_tempdb_version_gb",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_tempdb_user_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "User objects GB",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_tempdb_internal_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Internal objects GB",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_tempdb_version_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "Version store GB",
+          "refId": "C"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 47 },
+      "id": 40,
+      "title": "Backups · Jobs · Availability Groups",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": {
+            "align": "auto",
+            "cellOptions": { "type": "auto" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 24 },
+              { "color": "red",    "value": 48 }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "database" },
+            "properties": [{ "id": "displayName", "value": "Base de Datos" }, { "id": "custom.width", "value": 180 }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #FULL" },
+            "properties": [
+              { "id": "displayName", "value": "Full (horas)" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #LOG" },
+            "properties": [
+              { "id": "displayName", "value": "Log (horas)" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" } },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [
+                { "color": "green", "value": null },
+                { "color": "yellow", "value": 1 },
+                { "color": "red", "value": 2 }
+              ]}}
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 48 },
+      "id": 41,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": true, "displayName": "Full (horas)" }]
+      },
+      "title": "Backups — sql_hours_since_full_backup · sql_hours_since_log_backup",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_hours_since_full_backup\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "instant": true,
+          "refId": "FULL",
+          "format": "table"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_hours_since_log_backup\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "instant": true,
+          "refId": "LOG",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        { "id": "merge", "options": {} },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true, "__name__": true, "job": true, "ip": true,
+              "entorno": true, "grupo": true, "region": true,
+              "prioridad": true, "instance": true, "metric_name": true, "server": true
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": {
+            "align": "auto",
+            "cellOptions": { "type": "auto" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red",   "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "mappings": [
+            { "type": "value", "options": { "0": { "color": "red",   "text": "FAILED",      "index": 0 } } },
+            { "type": "value", "options": { "1": { "color": "green", "text": "SUCCEEDED",   "index": 1 } } },
+            { "type": "value", "options": { "2": { "color": "blue",  "text": "IN PROGRESS", "index": 2 } } }
+          ]
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "job" },
+            "properties": [{ "id": "displayName", "value": "Job" }, { "id": "custom.width", "value": 260 }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value" },
+            "properties": [
+              { "id": "displayName", "value": "Estado" },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 48 },
+      "id": 42,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": false, "displayName": "Estado" }]
+      },
+      "title": "SQL Agent Jobs — sql_job_last_run_status (0=Failed 1=OK 2=Running)",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_job_last_run_status\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "",
+          "instant": true,
+          "refId": "A",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true, "__name__": true, "job": true, "ip": true,
+              "entorno": true, "grupo": true, "region": true,
+              "prioridad": true, "instance": true, "metric_name": true, "server": true
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "s",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 56 },
+      "id": 43,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Availability Groups — sql_ag_lag_seconds {ag, replica, database}",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_ag_lag_seconds\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "{{ag}} / {{replica}} / {{database}}",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "decgbytes",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 56 },
+      "id": 44,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["lastNotNull","max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "AG Log Queue — sql_ag_log_queue_gb {ag, replica}",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_ag_log_queue_gb\", server=~\"$server\", job=\"sqlmon-agent\"}",
+          "legendFormat": "{{ag}} / {{replica}}",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 63 },
+      "id": 50,
+      "title": "Queries Lentas Activas — Detalle",
+      "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": {
+            "align": "auto",
+            "cellOptions": { "type": "auto" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 60 },
+              { "color": "red",    "value": 300 }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Value" },
+            "properties": [
+              { "id": "displayName", "value": "Elapsed (s)" },
+              { "id": "custom.width", "value": 100 },
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "severity" },
+            "properties": [
+              { "id": "displayName", "value": "Severidad" },
+              { "id": "custom.width", "value": 100 },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } },
+              { "id": "mappings", "value": [
+                { "type": "value", "options": { "CRITICAL": { "color": "red",    "index": 0 } } },
+                { "type": "value", "options": { "WARNING":  { "color": "yellow", "index": 1 } } },
+                { "type": "value", "options": { "ELEVATED": { "color": "blue",   "index": 2 } } }
+              ]}
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "database" },
+            "properties": [{ "id": "displayName", "value": "Base de Datos" }, { "id": "custom.width", "value": 140 }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "session_id" },
+            "properties": [{ "id": "displayName", "value": "Session ID" }, { "id": "custom.width", "value": 90 }]
+          }
+        ]
+      },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 64 },
+      "id": 51,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": true, "displayName": "Elapsed (s)" }]
+      },
+      "title": "sql_slow_query_elapsed_sec >10s — $server",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+          "expr": "sqlmon_all_metrics{metric_name=\"sql_slow_query_elapsed_sec\", server=~\"$server\", job=\"sqlmon-agent\"} > 10",
+          "legendFormat": "",
+          "instant": true,
+          "refId": "A",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true, "__name__": true, "job": true, "ip": true,
+              "entorno": true, "grupo": true, "region": true,
+              "prioridad": true, "instance": true, "metric_name": true, "server": true
+            }
+          }
+        }
+      ]
+    }
+
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["sqlmon", "sqlserver", "detalle"],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": { "type": "prometheus", "uid": "${DS_GRAFANACLOUD}" },
+        "definition": "label_values(sqlmon_all_metrics{job=\"sqlmon-agent\"}, server)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "server",
+        "options": [],
+        "query": { "query": "label_values(sqlmon_all_metrics{job=\"sqlmon-agent\"}, server)", "refId": "StandardVariableQuery" },
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "label": "Servidor"
+      }
+    ]
+  },
+  "time": { "from": "now-3h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "SQL Monitor — Detalle Servidor",
+  "uid": "sqlmon-detail",
+  "version": 1
+}
