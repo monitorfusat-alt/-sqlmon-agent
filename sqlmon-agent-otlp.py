@@ -79,7 +79,7 @@ OTLP_ENDPOINT = os.getenv(
     "https://otlp-gateway-prod-us-east-2.grafana.net/otlp/v1/metrics"
 )
 
-GRAFANA_CLOUD_USERNAME = os.getenv("GRAFANA_CLOUD_USERNAME", "1283546")
+GRAFANA_CLOUD_USERNAME = os.getenv("GRAFANA_CLOUD_USERNAME", "")
 GRAFANA_CLOUD_API_KEY = os.getenv("GRAFANA_CLOUD_API_KEY", "")
 
 if not GRAFANA_CLOUD_USERNAME or not GRAFANA_CLOUD_API_KEY:
