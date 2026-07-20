@@ -1,0 +1,11 @@
+# ============================================================
+# servers.txt - Servidores SQL Server para monitoreo
+# Formato: Nombre|IP|Instancia|Puerto|Entorno|Grupo|Región|Prioridad|Contacto|UsuarioSQL|PasswordSQL
+# Prioridad: CRITICO | ALTO | MEDIO | BAJO
+# ============================================================
+
+# === PRODUCCIÓN ===
+PROD-SQL-01|192.168.1.10|MSSQLSERVER|1433|Produccion|Grupo_A|Norte|CRITICO|dba-produccion@empresa.com|sqlmon_user|Str0ngP@ssw0rd!
+PROD-SQL-02|192.168.1.11|MSSQLSERVER|1433|Produccion|Grupo_A|Norte|CRITICO|dba-produccion@empresa.com|sqlmon_user|Str0ngP@ssw0rd!
+PROD-SQL-03|192.168.1.12|INSTANCIA2|1433|Produccion|Grupo_B|Norte|ALTO|dba-produccion@empresa.com|sqlmon_user|Str0ngP@ssw0rd!
+PROD-SQL-04|192.168.1.13|MSSQLSERVER|1433|Produccion|Grupo_A|Sur|CRITICO|dba-produccion@empresa.com|sqlmon_user|Str0ngP@ssw0rd!
